@@ -1,0 +1,2 @@
+FLASK_APP=curriculo.py
+FLASK_ENV=development
