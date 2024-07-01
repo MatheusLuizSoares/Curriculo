@@ -1,0 +1,21 @@
+/* app/static/css/base.css */
+
+/* Importação da fonte */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Definir a fonte padrão para o corpo */
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Estilo para links */
+a {
+    color: blue;  /* Defina a cor desejada aqui */
+    text-decoration: none;  /* Remove o sublinhado dos links */
+}
+
+/* Estilo para links ao passar o mouse */
+a:hover {
+    color: red;  /* Defina a cor ao passar o mouse */
+    text-decoration: underline;  /* Adiciona sublinhado ao passar o mouse */
+}
