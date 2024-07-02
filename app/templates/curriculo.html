@@ -1,11 +1,64 @@
-<!-- app/templates/curriculo.html -->
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block conteudo %}
-  <h1>Formulário</h1>
-  
-<img width="50" height="50" src="https://img.icons8.com/ios/50/parse-resume.png" alt="parse-resume"/>
+  <h1>Enviar Currículo</h1>
+  <form method="POST" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <p>
+          {{ form.nome.label }}<br>
+          {{ form.nome(size=32) }}<br>
+          {% for error in form.nome.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.email.label }}<br>
+          {{ form.email(size=32) }}<br>
+          {% for error in form.email.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.telefone.label }}<br>
+          {{ form.telefone(size=32) }}<br>
+          {% for error in form.telefone.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.cargo_desejado.label }}<br>
+          {{ form.cargo_desejado(size=32) }}<br>
+          {% for error in form.cargo_desejado.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.escolaridade.label }}<br>
+          {{ form.escolaridade() }}<br>
+          {% for error in form.escolaridade.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p>
+          {{ form.observacoes.label }}<br>
+          {{ form.observacoes(rows=5, cols=32) }}<br>
+      </p>
+      <p>
+          {{ form.arquivo.label }}<br>
+          {{ form.arquivo() }}<br>
+          {% for error in form.arquivo.errors %}
+              <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+      </p>
+      <p><input type="submit" value="Enviar"></p>
+  </form>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          <ul>
+              {% for category, message in messages %}
+                  <li class="{{ category }}">{{ message }}</li>
+              {% endfor %}
+          </ul>
+      {% endif %}
+  {% endwith %}
 {% endblock %}
-
-
-  
