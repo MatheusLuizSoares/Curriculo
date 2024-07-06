@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 
 {% block conteudo %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/curriculo.css') }}">
+  <script src="{{ url_for('static', filename='javascript/curriculo.js') }}"></script>
+  
   <h1>Enviar Currículo</h1>
+  
   <form method="POST" enctype="multipart/form-data">
       {{ form.hidden_tag() }}
       <p>
@@ -52,6 +56,7 @@
       </p>
       <p><input type="submit" value="Enviar"></p>
   </form>
+  
   {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
           <ul>
