@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -26,5 +27,9 @@ def create_app():
     with app.app_context():
         from . import routes, models
         db.create_all()
+
+    # Crie o diretório de upload se não existir
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
 
     return app

@@ -14,13 +14,20 @@ def index():
 def curriculo():
     form = CurriculoForm()
     if form.validate_on_submit():
+        filename = None
         if form.arquivo.data:
             arquivo = form.arquivo.data
             filename = secure_filename(arquivo.filename)
             arquivo_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            arquivo.save(arquivo_path)
+            try:
+                arquivo.save(arquivo_path)
+                app.logger.info(f"Arquivo salvo em: {arquivo_path}")
+            except Exception as e:
+                app.logger.error(f"Erro ao salvar o arquivo: {e}")
+                flash('Erro ao salvar o arquivo.', 'danger')
+                return redirect(url_for('curriculo'))
         else:
-            filename = None  # Permitir nulo
+            app.logger.warning("Nenhum arquivo foi carregado.")
         
         curriculo = Curriculo(
             nome=form.nome.data,
@@ -29,7 +36,7 @@ def curriculo():
             cargo_desejado=form.cargo_desejado.data,
             escolaridade=form.escolaridade.data,
             observacoes=form.observacoes.data,
-            arquivo=filename,
+            arquivo=filename,  # Salvar o nome do arquivo no banco de dados
             ip=request.remote_addr
         )
         db.session.add(curriculo)
@@ -50,11 +57,19 @@ def curriculo():
         Data de Envio: {curriculo.data_envio}
         '''
         if filename:
-            with app.open_resource(arquivo_path) as fp:
-                msg.attach(filename, "application/octet-stream", fp.read())
-        mail.send(msg)
+            try:
+                with app.open_resource(arquivo_path) as fp:
+                    msg.attach(filename, "application/octet-stream", fp.read())
+            except Exception as e:
+                app.logger.error(f"Erro ao anexar o arquivo no e-mail: {e}")
+        try:
+            mail.send(msg)
+        except Exception as e:
+            app.logger.error(f"Erro ao enviar o e-mail: {e}")
+            flash('Erro ao enviar o e-mail.', 'danger')
+            return redirect(url_for('curriculo'))
 
         flash('Currículo enviado com sucesso!', 'success')
-        return render_template('curriculo.html', form=form)
+        return redirect(url_for('curriculo'))
     
     return render_template('curriculo.html', form=form)

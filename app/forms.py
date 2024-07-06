@@ -1,8 +1,6 @@
-# app/forms.py
-
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms import SelectField, StringField, TextAreaField, ValidationError
+from wtforms import SelectField, StringField, TextAreaField
 from wtforms.validators import DataRequired, Email
 
 class CurriculoForm(FlaskForm):
@@ -14,11 +12,7 @@ class CurriculoForm(FlaskForm):
         ('fundamental', 'Ensino Fundamental'),
         ('medio', 'Ensino Médio'),
         ('superior', 'Ensino Superior')
-    ],)
+    ], validators=[DataRequired()])
     observacoes = TextAreaField('Observações')
     arquivo = FileField('Arquivo', validators=[FileAllowed(['pdf', 'doc', 'docx'], 'Apenas arquivos PDF, DOC e DOCX são permitidos.')])
 
-    def validacao_arquivo_extensao(self, field):
-        if field.data:
-            if not field.data.filename.split('.')[-1] in ['pdf', 'doc', 'docx']:
-                raise ValidationError('Extensão de arquivo não permitida!')
