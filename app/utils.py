@@ -8,8 +8,7 @@ import os
 def enviar_email(nome, email, telefone, cargo_desejado, escolaridade, observacoes, filepath):
     fromaddr = "teste@teste.com"
     toaddr = "teste@teste.com"
-    
-    # Configuração do e-mail
+
     msg = MIMEMultipart()
     msg['From'] = fromaddr
     msg['To'] = toaddr
@@ -25,8 +24,7 @@ def enviar_email(nome, email, telefone, cargo_desejado, escolaridade, observacoe
     """
     
     msg.attach(MIMEText(body, 'plain'))
-    
-    # Anexar o arquivo
+
     try:
         attachment = open(filepath, "rb")
         part = MIMEBase('application', 'octet-stream')
@@ -37,7 +35,7 @@ def enviar_email(nome, email, telefone, cargo_desejado, escolaridade, observacoe
     except Exception as e:
         print(f"Erro ao anexar o arquivo: {e}")
 
-    # Enviar o e-mail (simulação)
+   
     try:
         server = smtplib.SMTP('localhost')
         server.sendmail(fromaddr, toaddr, msg.as_string())
