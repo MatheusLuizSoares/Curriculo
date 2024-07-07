@@ -1,0 +1,15 @@
+.flash-message {
+  font-size: 1.2em; /* Tamanho de fonte maior */
+  padding: 10px; /* Espaçamento interno */
+  border-radius: 5px; /* Borda arredondada */
+}
+
+.flash-message.success {
+  background-color: #4CAF50; /* Cor de fundo verde para sucesso */
+  color: white; /* Texto branco */
+}
+
+.flash-message.danger {
+  background-color: #f44336; /* Cor de fundo vermelho para perigo */
+  color: white; /* Texto branco */
+}

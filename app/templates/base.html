@@ -3,26 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.4.1/paper.min.css" integrity="sha512-V+r0ugxPpGraMA2ubEWvqpfcZZAfMAbnSDPeu/6gYFfdxlgJGfCuNTNrZkrjQ0sJBoySdN6uoTVwJ+4P/BeTkg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}"> <!-- Adicione esta linha -->
   <title>Projeto Currículo</title>
 </head>
 <body>
-  <nav>
-    <a href="{{ url_for('index') }}">Página Inicial</a>
-    <a href="{{ url_for('curriculo') }}">Formulário</a>
-  </nav>
+<nav>
+  <a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Página Inicial</a>
+  <a href="{{ url_for('curriculo') }}"><i class="fas fa-file-alt"></i> Formulário</a>
+</nav>
 
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul>
-        {% for category, message in messages %}
-          <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <ul>
+      {% for category, message in messages %}
+        <li class="flash-message {{ category }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 
-  {% block conteudo %}
-  {% endblock %}
+{% block conteudo %}
+{% endblock %}
 </body>
 </html>
